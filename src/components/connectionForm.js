@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { connectUser } from '../actions/actions'
 import { User } from '../user'
+const axios = require('axios');
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -39,10 +40,20 @@ class ConnectionForm extends React.Component {
     deconnectionUser = () => {
       this.props.connectUser(undefined);
     }
+
+    testConnectionApi = () => {
+      /*fetch("http://localhost:8080/activity/create").then(Response => {
+        console.log(Response.body);
+        return Response;
+      })*/
+      let url = 'http://localhost:8080/activity/test';
+      console.log(axios.get(url));
+      return axios.get(url);
+    }
   
     render() {
       if(this.props.user!==undefined){
-        return <div><p>Bonjour, {this.state.login}</p><button onClick={this.deconnectionUser.bind(this)}>logout</button></div>
+        return <div><p>{this.testConnectionApi().data}, {this.state.login}</p><button onClick={this.deconnectionUser.bind(this)}>logout</button></div>
       }else{
         return (
           <div>
